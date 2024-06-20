@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site de Adoção de Pets</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Adoção de Pets</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/pet/cadastrar">Cadastrar Pet</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Sobre</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contato</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Introdução -->
+    <div class="jumbotron jumbotron-fluid text-center">
+        <div class="container">
+            <h1 class="display-4">Bem-vindo ao Site de Adoção de Pets</h1>
+            <p class="lead">Encontre seu novo melhor amigo hoje mesmo!</p>
+            <a class="btn btn-primary btn-lg" href="cadastro.html" role="button">Cadastre um Pet</a>
+        </div>
+    </div>
+
+    <!-- Pets Disponíveis -->
+    <div class="container">
+        <h2 class="text-center">Pets Disponíveis para Adoção</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="pet1.jpg" class="card-img-top" alt="Pet 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Nome do Pet 1</h5>
+                        <p class="card-text">Descrição breve do pet 1.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="pet2.jpg" class="card-img-top" alt="Pet 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Nome do Pet 2</h5>
+                        <p class="card-text">Descrição breve do pet 2.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <img src="pet3.jpg" class="card-img-top" alt="Pet 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Nome do Pet 3</h5>
+                        <p class="card-text">Descrição breve do pet 3.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="bg-light text-center text-lg-start mt-5">
+        <div class="text-center p-3">
+            © 2023 Adoção de Pets. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
