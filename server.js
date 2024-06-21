@@ -1,4 +1,3 @@
-const exp = require("constants");
 const express = require("express");
 const mysql = require("mysql2");
 
@@ -64,12 +63,27 @@ app.post("/pet/cadastrar", (req, res) => {
           .status(500)
           .json({ resposta: `Não foi possível inserir o registro: ${err}` });
       }
-      return res.status(200).json({ resposta: `Livro cadastrado com sucesso` });
+      return res.status(200).json({ resposta: `Pet cadastrado com sucesso` });
     }
   );
 });
 
 // ------------------------- FINAL ROTA POST-----------------------------------------
+
+// ------------------------- INICIO ROTA DELETE-----------------------------------------
+app.delete("/pet/deletar", (req,res)=>{
+  let {id}=req.body;
+  const sql = "delete from tb_pet where id = ?"
+  db.query(sql, [id], (err)=>{
+    if (err) {
+      return res.status(500).json({ resposta: `Não deletou: ${err}` });
+    }
+    return res.status(200).json({ resposta: `Deletoooou` });
+  });
+});
+// ------------------------- FINAL ROTA DELETE-----------------------------------------
+
+
 
 // Porta de erro
 app.use((req, res) => {

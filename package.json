@@ -11,6 +11,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "datatables.net-dt": "^2.0.8",
     "express": "^4.19.2",
     "mysql2": "^3.10.1",
     "nodemon": "^3.1.3"
