@@ -32,15 +32,14 @@ const listaPet = () => {
   fetch("/pet/listar")
     .then((response) => response.json())
     .then((result) => {
-
       let tabelapet = document.getElementById("listadospets");
-      
+
       if ($.fn.DataTable.isDataTable("#myTable")) {
         // Destruir a instância existente do DataTable
         var table = $("#myTable").DataTable();
         table.destroy();
       }
-      
+
       // Destroy the DataTable
       tabelapet.innerHTML = "";
 
@@ -71,7 +70,7 @@ const listaPet = () => {
     })
     .catch((error) => console.error("Erro ao listar comentários:", error));
 };
-    
+
 // const deletar = (id) => {
 //   fetch(`/pet/deletar/${id}`, {
 //     method: "DELETE",

@@ -45,6 +45,20 @@ app.get(`/pet/listar`, (req, res) => {
     return res.status(200).json(results);
   });
 });
+
+app.get(`/pessoa/cadastrar`, (req, res) => {
+  res.sendFile(__dirname + "/public/gerenciar_pessoa.html");
+});
+
+app.get(`/pessoa/listar`, (req, res) => {
+  const sql = "SELECT * FROM tb_pessoa";
+  db.query(sql, (err, results) => {
+    if (err) {
+      return res.status(500).json({ resposta: `Erro ao consultar: ${err}` });
+    }
+    return res.status(200).json(results);
+  });
+});
 // ------------------------- FINAL ROTA GET-----------------------------------------
 
 // ------------------------- INICIO ROTA POST----------------------------------------
@@ -67,14 +81,81 @@ app.post("/pet/cadastrar", (req, res) => {
     }
   );
 });
+app.post("/pessoa/cadastrar", (req, res) => {
+  let {
+    cpf,
+    nome,
+    email,
+    rua,
+    numero,
+    bairro,
+    complemento,
+    cidade,
+    estado,
+    cep,
+    rg,
+    telefone,
+    data_nascimento,
+    senha,
+    confirmar,
+  } = req.body;
+
+  const sql =
+    "INSERT INTO tb_pessoa (cpf, nome, email, rua, numero, bairro, complemento, cidade, estado, cep, rg, telefone, data_nascimento, senha, confirmar) VALUES( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, sha2(?, 256),sha2(?, 256))";
+
+  db.query(
+    sql,
+    [
+      cpf,
+      nome,
+      email,
+      rua,
+      numero,
+      bairro,
+      complemento,
+      cidade,
+      estado,
+      cep,
+      rg,
+      telefone,
+      data_nascimento,
+      senha,
+      confirmar,
+    ],
+    (err) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ resposta: `Não foi possível inserir o registro: ${err}` });
+      }
+      return res
+        .status(200)
+        .json({ resposta: `Pessoa cadastrada com sucesso` });
+    }
+  );
+});
 
 // ------------------------- FINAL ROTA POST-----------------------------------------
 
 // ------------------------- INICIO ROTA DELETE-----------------------------------------
-app.delete("/pet/deletar", (req,res)=>{
-  let {id}=req.body;
-  const sql = "delete from tb_pet where id = ?"
-  db.query(sql, [id], (err)=>{
+app.delete("/pet/deletar", (req, res) => {
+  let { id } = req.body;
+  const sql = "delete from tb_pet where id = ?";
+  db.query(sql, [id], (err) => {
+    if (err) {
+      return res.status(500).json({ resposta: `Não deletou: ${err}` });
+    }
+    return res.status(200).json({ resposta: `Deletoooou` });
+  });
+});
+
+
+
+
+app.delete("/pessoa/deletar", (req, res) => {
+  let { id } = req.body;
+  const sql = "delete from tb_pessoa where id = ?";
+  db.query(sql, [id], (err) => {
     if (err) {
       return res.status(500).json({ resposta: `Não deletou: ${err}` });
     }
@@ -82,8 +163,6 @@ app.delete("/pet/deletar", (req,res)=>{
   });
 });
 // ------------------------- FINAL ROTA DELETE-----------------------------------------
-
-
 
 // Porta de erro
 app.use((req, res) => {
