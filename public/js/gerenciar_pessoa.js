@@ -164,3 +164,30 @@ const deletar = (id) => {
     }
   });
 };
+const buscaCep = () => {
+  let cep = document.getElementById("cep");
+  if (cep.value == "") {
+    alert("Cep não preenchido");
+    return;
+  }
+  fetch(`https://viacep.com.br//ws/${cep.value}/json/`)
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.erro != "true") {
+        rua.value = result.logradouro;
+        bairro.value = result.bairro;
+        cidade.value = result.localidade;
+        estado.value = result.uf;
+        numero.focus()
+      } else {
+        alert('Cep não encontrado')
+        rua.value = "";
+        bairro.value = "";
+        cidade.value = "";
+        estado.value = "";
+      }
+    }).catch((error)=>{
+      alert('Cep Inválido')
+
+    })
+}
