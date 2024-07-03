@@ -59,6 +59,7 @@ app.get(`/pessoa/listar`, (req, res) => {
     return res.status(200).json(results);
   });
 });
+
 // ------------------------- FINAL ROTA GET-----------------------------------------
 
 // ------------------------- INICIO ROTA POST----------------------------------------
@@ -81,6 +82,21 @@ app.post("/pet/cadastrar", (req, res) => {
     }
   );
 });
+
+// listar pets por id
+app.post(`/pet/listar/id`, (req, res) => {
+  let id = req.body.id;
+
+  const sql = "SELECT * FROM tb_pet WHERE id = ?";
+
+  db.query(sql, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ resposta: `Erro ao consultar: ${err}` });
+    }
+    return res.status(200).json(results);
+  });
+});
+
 app.post("/pessoa/cadastrar", (req, res) => {
   let {
     cpf,
@@ -149,9 +165,6 @@ app.delete("/pet/deletar", (req, res) => {
   });
 });
 
-
-
-
 app.delete("/pessoa/deletar", (req, res) => {
   let { id } = req.body;
   const sql = "delete from tb_pessoa where id = ?";
@@ -163,6 +176,51 @@ app.delete("/pessoa/deletar", (req, res) => {
   });
 });
 // ------------------------- FINAL ROTA DELETE-----------------------------------------
+// ------------------------- INICIO ROTA PUT-----------------------------------------
+app.put("/pet/atualizar", (req, res) => {
+  let {
+    nome,
+    raca,
+    porte,
+    nascimento,
+    observacao,
+    cor,
+    sexo,
+    castrado,
+    adotado,
+    id,
+  } = req.body;
+
+  // insercao dos dados no banco
+  const sql =
+    "UPDATE tb_pet SET nome = ?, raca = ?, porte = ?, data_nascimento = ?, observacao = ?, cor = ?, sexo = ?, castrado = ?, adotado = ? WHERE id = ?";
+
+  db.query(
+    sql,
+    [
+      nome,
+      raca,
+      porte,
+      nascimento,
+      observacao,
+      cor,
+      sexo,
+      castrado,
+      adotado,
+      id,
+    ],
+    (err) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ resposta: `Não foi possível atualizar o registro: ${err}` });
+      }
+      return res.status(200).json({ resposta: "Pet atualizado com sucesso!" });
+    }
+  );
+});
+
+// ------------------------- FINAL ROTA PUT-----------------------------------------
 
 // Porta de erro
 app.use((req, res) => {
