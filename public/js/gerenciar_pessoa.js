@@ -93,7 +93,8 @@ const listaPessoa = () => {
         <td>${result[c].rg}</td>
         <td>${result[c].telefone}</td>
         <td>${result[c].data_nascimento}</td>
-        <td><button type="button" onclick="deletar(${result[c].id})">Deletar</button></td>
+        <td><button class="btn btn-danger btn-sm" type="button" onclick="deletar(${result[c].id})">Deletar</button>
+          <button class="btn btn-success btn-sm" type="button" onclick="atualizar(${result[c].id})">Atualizar</button></td>
       </tr>`;
       }
 
@@ -108,21 +109,6 @@ const listaPessoa = () => {
     })
     .catch((error) => console.error("Erro ao listar comentários:", error));
 };
-
-// const deletar = (id) => {
-//   fetch("/pessoa/deletar", {
-//     method: "DELETE",
-//     body: `id=${id}`,
-//     headers: {
-//       "Content-type": "application/x-www-form-urlencoded",
-//     },
-//   })
-//     .then((response) => response.json())
-//     .then((result) => {
-//       alert(result.resposta);
-//       listaPessoa();
-//     });
-// };
 
 const deletar = (id) => {
   Swal.fire({
@@ -164,6 +150,74 @@ const deletar = (id) => {
     }
   });
 };
+
+const atualizar = (id) => {
+  fetch("/pessoa/listar/id", {
+    method: "POST",
+    body: `id=${id}`,
+    headers: {
+      "Content-type": "application/x-www-form-urlencoded",
+    },
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      const data = new Date(result[0].data_nascimento);
+      const dataFormatada = data.toISOString().split("T")[0];
+      document.getElementById("id").value = result[0].id;
+      document.getElementById("atualiza-cpf").value = result[0].cpf;
+      document.getElementById("atualiza-nome").value = result[0].nome;
+      document.getElementById("atualiza-email").value = result[0].email;
+      document.getElementById("atualiza-rua").value = result[0].rua;
+      document.getElementById("atualiza-numero").value = result[0].numero;
+      document.getElementById("atualiza-bairro").value = result[0].bairro;
+      document.getElementById("atualiza-complemento").value =
+        result[0].complemento;
+      document.getElementById("atualiza-cidade").value = result[0].cidade;
+      document.getElementById("atualiza-estado").value = result[0].estado;
+      document.getElementById("atualiza-cep").value = result[0].cep;
+      document.getElementById("atualiza-rg").value = result[0].rg;
+      document.getElementById("atualiza-telefone").value = result[0].telefone;
+      document.getElementById("atualiza-data_nascimento").value = dataFormatada;
+    });
+};
+
+document
+  .getElementById("atualizaPessoa")
+  .addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    let id = document.getElementById("id");
+    let cpf = document.getElementById("atualiza-cpf");
+    let nome = document.getElementById("atualiza-nome");
+    let email = document.getElementById("atualiza-email");
+    let rua = document.getElementById("atualiza-rua");
+    let numero = document.getElementById("atualiza-numero");
+    let bairro = document.getElementById("atualiza-bairro");
+    let complemento = document.getElementById("atualiza-complemento");
+    let cidade = document.getElementById("atualiza-cidade");
+    let estado = document.getElementById("atualiza-estado");
+    let cep = document.getElementById("atualiza-cep");
+    let rg = document.getElementById("atualiza-rg");
+    let telefone = document.getElementById("atualiza-telefone");
+    let data_nascimento = document.getElementById("atualiza-data_nascimento");
+
+    fetch("/pessoa/atualizar", {
+      method: "PUT",
+      body: `cpf=${cpf.value}&nome=${nome.value}&email=${email.value}&rua=${rua.value}&numero=${numero.value}&bairro=${bairro.value}&complemento=${complemento.value}&cidade=${cidade.value}&estado=${estado.value}&cep=${cep.value}&rg=${rg.value}&telefone=${telefone.value}&data_nascimento=${data_nascimento.value}&id=${id.value}`,
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded",
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        alert(result.resposta);
+        listaPessoa();
+      })
+      .catch(() => {
+        alert("Nao foi possível realizar a requisição");
+      });
+  });
+
 const buscaCep = () => {
   let cep = document.getElementById("cep");
   if (cep.value == "") {
@@ -178,16 +232,44 @@ const buscaCep = () => {
         bairro.value = result.bairro;
         cidade.value = result.localidade;
         estado.value = result.uf;
-        numero.focus()
+        numero.focus();
       } else {
-        alert('Cep não encontrado')
+        alert("Cep não encontrado");
         rua.value = "";
         bairro.value = "";
         cidade.value = "";
         estado.value = "";
       }
-    }).catch((error)=>{
-      alert('Cep Inválido')
-
     })
-}
+    .catch((error) => {
+      alert("Cep Inválido");
+    });
+};
+
+const atualizaCep = () => {
+  let atualizaCep = document.getElementById("atualiza-cep");
+  if (atualizaCep.value == "") {
+    alert("Cep não preenchido");
+    return;
+  }
+  fetch(`https://viacep.com.br//ws/${atualizaCep.value}/json/`)
+    .then((response) => response.json())
+    .then((result) => {
+      if (result.erro != "true") {
+        document.getElementById("atualiza-rua").value = result.logradouro;
+        document.getElementById("atualiza-bairro").value = result.bairro;
+        document.getElementById("atualiza-cidade").value = result.localidade;
+        document.getElementById("atualiza-estado").value = result.uf;
+        document.getElementById("atualiza-numero").focus();
+      } else {
+        alert("Cep não encontrado");
+        document.getElementById("atualiza-rua").value = "";
+        document.getElementById("atualiza-bairro").value = "";
+        document.getElementById("atualiza-cidade").value = "";
+        document.getElementById("atualiza-estado").value = "";
+      }
+    })
+    .catch((error) => {
+      alert("Cep Inválido");
+    });
+};

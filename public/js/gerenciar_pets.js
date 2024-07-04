@@ -7,21 +7,25 @@ document
   .addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    let nome = document.getElementById("nome");
-    let raca = document.getElementById("raca");
-    let porte = document.getElementById("porte");
-    let data_nascimento = document.getElementById("data_nascimento");
-    let observacao = document.getElementById("observacao");
-    let cor = document.getElementById("cor");
-    let sexo = document.getElementById("sexo");
-    let castrado = document.getElementById("castrado");
+    // let nome = document.getElementById("nome");
+    // let raca = document.getElementById("raca");
+    // let porte = document.getElementById("porte");
+    // let data_nascimento = document.getElementById("data_nascimento");
+    // let observacao = document.getElementById("observacao");
+    // let cor = document.getElementById("cor");
+    // let sexo = document.getElementById("sexo");
+    // let castrado = document.getElementById("castrado");
+
+    let form = document.getElementById("cadastroDoPet");
+    let dados = new FormData(form);
 
     const response = await fetch("/pet/cadastrar", {
       method: "POST",
-      body: `nome=${nome.value}&raca=${raca.value}&porte=${porte.value}&data_nascimento=${data_nascimento.value}&observacao=${observacao.value}&cor=${cor.value}&sexo=${sexo.value}&castrado=${castrado.value}`,
-      headers: {
-        "Content-type": "application/x-www-form-urlencoded",
-      },
+      body: dados,
+      // body: `nome=${nome.value}&raca=${raca.value}&porte=${porte.value}&data_nascimento=${data_nascimento.value}&observacao=${observacao.value}&cor=${cor.value}&sexo=${sexo.value}&castrado=${castrado.value}`,
+      // headers: {
+      //   "Content-type": "application/x-www-form-urlencoded",
+      // },
     });
     const result = await response.json();
     alert(result.resposta);

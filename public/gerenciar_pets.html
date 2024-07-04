@@ -56,7 +56,7 @@
     <div class="container mt-5">
       <div class="cadastrodospets">
         <h1 class="text-center">Cadastro de Pets para Adoção</h1>
-        <form id="cadastroDoPet">
+        <form id="cadastroDoPet" enctype="multipart/form-data">
           <div class="form-group">
             <label for="nome">Nome</label>
             <input
@@ -135,6 +135,17 @@
               <option value="1">Não</option>
             </select>
           </div>
+          <div class="form-group">
+            <label for="imagem">Imagem do Pet</label>
+            <input
+              type="file"
+              class="form-control"
+              id="imagem"
+              name="imagem"
+              accept="image/*"
+              required
+            />
+          </div>
           <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
       </div>
@@ -164,7 +175,7 @@
     <div class="container mt-5">
       <div class="autalizaPet">
         <h1 class="text-center">Atualizar Pets</h1>
-        <form id="autalizaPet">
+        <form id="autalizaPet" enctype="multipart/form-data">
           <div class="form-group">
             <label for="atualizar-id">ID</label>
             <input
@@ -261,6 +272,17 @@
               <option value="0">Sim</option>
               <option value="1">Não</option>
             </select>
+          </div>
+          <div class="form-group">
+            <label for="atualizar-imagem">Imagem do Pet</label>
+            <input
+              type="file"
+              class="form-control"
+              id="atualizar-imagem"
+              name="atualizar-imagem"
+              accept="image/*"
+              required
+            />
           </div>
           <button type="submit" class="btn btn-primary">Atualizar</button>
         </form>
